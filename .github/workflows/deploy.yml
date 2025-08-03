@@ -37,6 +37,9 @@ jobs:
         ls -la
         npm ci
         npm install hexo-renderer-stylus hexo-renderer-pug --save
+        echo "Installing theme dependencies:"
+        cd themes/anzhiyu && npm install
+        cd ../..
       
     - name: Build
       run: |
