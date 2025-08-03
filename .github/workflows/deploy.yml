@@ -32,10 +32,16 @@ jobs:
         cache: 'npm'
         
     - name: Install dependencies
-      run: npm ci
+      run: |
+        pwd
+        ls -la
+        npm ci
       
     - name: Build
-      run: npm run build
+      run: |
+        pwd
+        ls -la
+        npm run build
       
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
