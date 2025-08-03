@@ -49,7 +49,7 @@ jobs:
         echo "Checking if theme files exist:"
         ls -la themes/anzhiyu/
         echo "Building site:"
-        hexo generate
+        npx hexo generate
       
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
