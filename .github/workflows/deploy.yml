@@ -39,7 +39,15 @@ jobs:
         npm install hexo-renderer-stylus hexo-renderer-pug --save
       
     - name: Build
-      run: npm run build
+      run: |
+        pwd
+        ls -la
+        echo "Checking theme directory:"
+        ls -la themes/
+        echo "Checking theme config:"
+        cat _config.yml | grep theme
+        echo "Building site:"
+        npm run build
       
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
