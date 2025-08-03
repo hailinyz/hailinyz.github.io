@@ -46,8 +46,10 @@ jobs:
         ls -la themes/
         echo "Checking theme config:"
         cat _config.yml | grep theme
+        echo "Checking if theme files exist:"
+        ls -la themes/anzhiyu/
         echo "Building site:"
-        npm run build
+        hexo generate
       
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
