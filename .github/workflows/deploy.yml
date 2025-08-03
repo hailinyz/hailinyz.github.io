@@ -32,7 +32,11 @@ jobs:
         cache: 'npm'
         
     - name: Install dependencies
-      run: npm ci
+      run: |
+        pwd
+        ls -la
+        npm ci
+        npm install hexo-renderer-stylus hexo-renderer-pug --save
       
     - name: Build
       run: npm run build
