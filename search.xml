@@ -11,6 +11,12 @@
         <content type="html"><![CDATA[<div class="video-container">[视频内嵌代码]</div><style>.video-container { position: relative; padding-top: 56.25%; } .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }</style>]]></content>
       
       
+      <categories>
+          
+          <category> 技术类文章 </category>
+          
+      </categories>
+      
       
     </entry>
     
