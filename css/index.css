@@ -20165,6 +20165,16 @@ a
   margin-top: 6px;
   font-size: 0.8rem;
 }
+#twikoo .tk-extra[data-location] {
+  background: var(--anzhiyu-main);
+  color: var(--anzhiyu-white);
+  border-color: var(--anzhiyu-main);
+  font-weight: 500;
+}
+#twikoo .tk-extra[data-location]:before {
+  content: "📍 ";
+  margin-right: 2px;
+}
 #twikoo .tk-extra-text {
   font-size: 0.75rem;
 }
