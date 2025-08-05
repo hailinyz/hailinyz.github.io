@@ -211,7 +211,7 @@ queueMicrotask(() => {
   const Log = function () {
     HoldLog.apply(console, arguments);
   }; //在恢复前输出日志
-  const grt = new Date("04/01/2021 00:00:00"); //此处修改你的建站时间或者网站上线时间
+  const grt = new Date("08/05/2025 00:00:00"); //此处修改你的建站时间或者网站上线时间
   now1.setTime(now1.getTime() + 250);
   const days = (now1 - grt) / 1000 / 60 / 60 / 24;
   const dnum = Math.floor(days);
@@ -289,7 +289,7 @@ queueMicrotask(() => {
 
   const loadTwikoo = () => {
     if (typeof twikoo === 'object') setTimeout(runFn,0)
-    else getScript('https://cdn.cbd.int/twikoo@1.6.39/dist/twikoo.all.min.js').then(runFn)
+    else getScript('https://cdn.cbd.int/twikoo@1.6.44/dist/twikoo.all.min.js').then(runFn)
   }
 
   const getCount = () => {
@@ -364,7 +364,7 @@ queueMicrotask(() => {
     if (typeof twikoo === 'object') {
       runTwikoo()
     } else {
-      getScript('https://cdn.cbd.int/twikoo@1.6.39/dist/twikoo.all.min.js').then(runTwikoo)
+      getScript('https://cdn.cbd.int/twikoo@1.6.44/dist/twikoo.all.min.js').then(runTwikoo)
     }
   }
 
