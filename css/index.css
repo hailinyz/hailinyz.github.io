@@ -23326,6 +23326,10 @@ i.bber-gotobb {
   }
 }
 
+/* 修改即刻页面标题颜色 */
+.author-content-item-title {
+  color: #FF00FF !important;
+} 
 /* 音乐播放器 */
 
 .aplayer.aplayer-narrow .aplayer-body,
