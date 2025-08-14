@@ -1,3 +1,3 @@
-var posts=["2025/08/08/第一期：HailinMusicPlayer 安装使用指南改/"];function toRandomPost(){
+var posts=["2025/08/08/第一期：关于如何下载 HailinMusicPlayer 以及安装使用指南/"];function toRandomPost(){
     pjax.loadUrl('/'+posts[Math.floor(Math.random() * posts.length)]);
   };
