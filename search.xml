@@ -13,9 +13,7 @@
       
       <categories>
           
-          <category> 各种资料 </category>
-          
-          <category> 大学 </category>
+          <category> 大学生涯 </category>
           
       </categories>
       
@@ -64,37 +62,6 @@
     
     
     <entry>
-      <title>第一期：HailinMusicPlayer 安装使用指南</title>
-      <link href="/2025/08/08/%E7%AC%AC%E4%B8%80%E6%9C%9F%EF%BC%9A%E5%85%B3%E4%BA%8E%E5%A6%82%E4%BD%95%E4%B8%8B%E8%BD%BD%20HailinMusicPlayer%20%E4%BB%A5%E5%8F%8A%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/"/>
-      <url>/2025/08/08/%E7%AC%AC%E4%B8%80%E6%9C%9F%EF%BC%9A%E5%85%B3%E4%BA%8E%E5%A6%82%E4%BD%95%E4%B8%8B%E8%BD%BD%20HailinMusicPlayer%20%E4%BB%A5%E5%8F%8A%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/</url>
-      
-        <content type="html"><![CDATA[<!-- <div class="video-container">[视频内嵌代码]</div><style>.video-container { position: relative; padding-top: 56.25%; } .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }</style> --><h1 id="第一期：HailinMusicPlayer-安装使用指南"><a href="#第一期：HailinMusicPlayer-安装使用指南" class="headerlink" title="第一期：HailinMusicPlayer 安装使用指南"></a>第一期：HailinMusicPlayer 安装使用指南</h1><h2 id="一、下载软件包"><a href="#一、下载软件包" class="headerlink" title="一、下载软件包"></a>一、下载软件包</h2><h3 id="详细步骤："><a href="#详细步骤：" class="headerlink" title="详细步骤："></a>详细步骤：</h3><ol><li>访问<a href="https://openlist.hljs.qzz.io/">海林小喷壶官网</a></li><li>找到<code>HailinMusicPlayer.rar</code>下载链接</li><li>将文件保存到非系统盘（推荐D盘）</li></ol><p><img src="https://blogtc.hljs.qzz.io/1.jpg" alt="1.jpg"></p><blockquote><p><strong>重要提示</strong>：如果没有D盘，也可以放在其他盘，只要能找到下载好的压缩包就行。</p></blockquote><h3 id="如果觉得压缩包麻烦可以直接下载安装包："><a href="#如果觉得压缩包麻烦可以直接下载安装包：" class="headerlink" title="如果觉得压缩包麻烦可以直接下载安装包："></a>如果觉得压缩包麻烦可以直接下载安装包：</h3><p><img src="https://blogtc.hljs.qzz.io/%E7%AC%AC%E4%B8%80%E6%9C%9F%E8%A1%A5%E5%85%85%E5%9B%BE.png" alt="第一期补充图.png"></p><h2 id="二、创建安装目录"><a href="#二、创建安装目录" class="headerlink" title="二、创建安装目录"></a>二、创建安装目录</h2><ol><li>在D盘新建文件夹：<ul><li>右键D盘空白处 → 新建 → 文件夹</li><li>命名为<code>HailinMusicPlayer</code></li></ul></li></ol><p><img src="https://blogtc.hljs.qzz.io/2.jpg" alt="2.jpg"></p><ol start="2"><li>解压安装包：<ul><li>右键<code>.rar</code>文件 → 解压到当前文件夹</li><li>得到<code>HailinMusicPlayer-4.9.0-win-x64</code>目录</li></ul></li></ol><h2 id="三、安装过程详解"><a href="#三、安装过程详解" class="headerlink" title="三、安装过程详解"></a>三、安装过程详解</h2><ol><li>进入解压后的文件夹，双击安装程序：</li></ol><p><img src="https://blogtc.hljs.qzz.io/3.jpg" alt="3.jpg"></p><ol start="2"><li>点击”下一步”继续安装：</li></ol><p><img src="https://blogtc.hljs.qzz.io/4.jpg" alt="4.jpg"></p><ol start="3"><li>选择安装路径：<ul><li>点击”浏览”按钮</li><li>选择之前创建的<code>D:\HailinMusicPlayer</code></li></ul></li></ol><p><img src="https://blogtc.hljs.qzz.io/5.png" alt="5.png"></p><ol start="4"><li>确认安装位置：</li></ol><p><img src="https://blogtc.hljs.qzz.io/6.png" alt="6.png"></p><ol start="5"><li>开始安装：</li></ol><p><img src="https://blogtc.hljs.qzz.io/7.png" alt="7.png"></p><h2 id="四、安装后操作"><a href="#四、安装后操作" class="headerlink" title="四、安装后操作"></a>四、安装后操作</h2><ol><li>创建桌面快捷方式（可选）</li><li>首次运行建议：<ul><li>右键图标 → 以管理员身份运行</li><li>允许防火墙访问（如弹出提示）</li></ul></li></ol><h2 id="常见问题解答"><a href="#常见问题解答" class="headerlink" title="常见问题解答"></a>常见问题解答</h2><p>Q：安装失败怎么办？<br>A：请检查：</p><ol><li>安装路径是否包含中文</li><li>是否关闭了杀毒软件</li><li>关闭系统防火墙大概率可以解决安装不了的问题。</li></ol><blockquote><p>如需更多帮助，请联系站长邮箱：<a href="mailto:&#x68;&#x6c;&#x78;&#x70;&#121;&#x40;&#x71;&#113;&#x2e;&#x63;&#x6f;&#109;">hlxpy@qq.com</a></p></blockquote>]]></content>
-      
-      
-      <categories>
-          
-          <category> 各种资料 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 工具 </tag>
-            
-            <tag> HailinMusicPlayer </tag>
-            
-            <tag> 教程 </tag>
-            
-            <tag> 音乐 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>第三期：海林影院网站使用指南</title>
       <link href="/2025/08/08/%E7%AC%AC%E4%B8%89%E6%9C%9F%EF%BC%9A%E6%B5%B7%E6%9E%97%E5%BD%B1%E8%A7%86%E5%BD%B1%E8%A7%86%E8%81%9A%E5%90%88%E7%BD%91%E7%AB%99%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/"/>
       <url>/2025/08/08/%E7%AC%AC%E4%B8%89%E6%9C%9F%EF%BC%9A%E6%B5%B7%E6%9E%97%E5%BD%B1%E8%A7%86%E5%BD%B1%E8%A7%86%E8%81%9A%E5%90%88%E7%BD%91%E7%AB%99%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/</url>
@@ -113,11 +80,73 @@
             
             <tag> 工具 </tag>
             
-            <tag> 教程 </tag>
-            
             <tag> 海林影院 </tag>
             
+            <tag> 教程 </tag>
+            
             <tag> 影视 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>第二期：HailinMusicPlayer 使用指南</title>
+      <link href="/2025/08/08/%E7%AC%AC%E4%BA%8C%E6%9C%9F%EF%BC%9AHailinMusicPlayer%20%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/"/>
+      <url>/2025/08/08/%E7%AC%AC%E4%BA%8C%E6%9C%9F%EF%BC%9AHailinMusicPlayer%20%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/</url>
+      
+        <content type="html"><![CDATA[<!-- <div class="video-container">[视频内嵌代码]</div><style>.video-container { position: relative; padding-top: 56.25%; } .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }</style> --><h1 id="第二期：HailinMusicPlayer-使用指南"><a href="#第二期：HailinMusicPlayer-使用指南" class="headerlink" title="第二期：HailinMusicPlayer 使用指南"></a>第二期：HailinMusicPlayer 使用指南</h1><h2 id="一、使用网易云UID登录"><a href="#一、使用网易云UID登录" class="headerlink" title="一、使用网易云UID登录"></a>一、使用网易云<code>UID</code>登录</h2><p><img src="https://blogtc.hljs.qzz.io/%E7%99%BB%E5%BD%95%E6%96%B9%E5%BC%8F.jpg" alt="登录方式.jpg"></p><h2 id="二、关于邀请码系统"><a href="#二、关于邀请码系统" class="headerlink" title="二、关于邀请码系统"></a>二、关于邀请码系统</h2><h3 id="为什么需要邀请码？"><a href="#为什么需要邀请码？" class="headerlink" title="为什么需要邀请码？"></a>为什么需要邀请码？</h3><p>我们采用邀请码机制主要基于以下考虑：</p><ol><li><p><strong>保障优质体验</strong></p><ul><li>控制用户增长规模，确保服务器稳定运行</li><li>避免因用户激增导致的播放卡顿、延迟等问题</li><li>为每位用户保留充足的带宽资源</li></ul></li><li><p><strong>维护社区环境</strong></p><ul><li>筛选真正热爱音乐的核心用户</li><li>建立良好的音乐分享氛围</li><li>有效防止机器人和恶意注册</li></ul></li><li><p><strong>版权保护</strong></p><ul><li>合规管理音乐内容使用</li><li>尊重音乐人创作成果</li><li>建立可追溯的使用记录</li></ul></li></ol><blockquote><p>温馨提醒：本播放器为个人开发的学习项目，感谢您的理解与支持</p></blockquote><h2 id="三、获取邀请码方式"><a href="#三、获取邀请码方式" class="headerlink" title="三、获取邀请码方式"></a>三、获取邀请码方式</h2><h3 id="官方渠道"><a href="#官方渠道" class="headerlink" title="官方渠道"></a>官方渠道</h3><ul><li>定期在<a href="https://hlxpy.hljs.qzz.io/essay/">海林小盆友即刻短文</a>发放</li><li>关注官方动态获取限时邀请码</li><li>联系客服邮箱：<a href="mailto:&#x68;&#x6c;&#x78;&#x70;&#121;&#x40;&#113;&#113;&#46;&#99;&#x6f;&#109;">hlxpy@qq.com</a></li></ul><h3 id="当前可用邀请码"><a href="#当前可用邀请码" class="headerlink" title="当前可用邀请码"></a>当前可用邀请码</h3><p>邀请码：<strong>VIP001</strong></p><h2 id="四、获取邀请码"><a href="#四、获取邀请码" class="headerlink" title="四、获取邀请码"></a>四、获取邀请码</h2><ul><li>🛰搜索：<code>LYZ166024 </code></li><li>输入：<code>邀请码</code></li><li>即可获得邀请码</li></ul><h2 id="五、费用说明"><a href="#五、费用说明" class="headerlink" title="五、费用说明"></a>五、费用说明</h2><p>当前收取<code>0.98</code>元主要用于：</p><ul><li><code>0.98即可通过邀请码使用本软件</code></li><li>服务器基础运维费用</li><li>域名续费成本</li><li>基础功能维护更新</li></ul><p>我们承诺：<br>✓ 费用透明公开<br>✓ 无隐藏收费<br>✓ 持续优化体验</p><h2 id="六、常见问题"><a href="#六、常见问题" class="headerlink" title="六、常见问题"></a>六、常见问题</h2><p>Q：邀请码会失效吗？<br>A：目前发放的邀请码长期有效</p><p>Q：遇到技术问题怎么办？<br>A：欢迎随时联系🛰：<code>LYZ166024</code></p><p>感谢您选择<code>HailinMusicPlayer</code>！<br>我们将持续改进，为您提供更好的音乐体验。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 各种资料 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 工具 </tag>
+            
+            <tag> 教程 </tag>
+            
+            <tag> HailinMusicPlayer </tag>
+            
+            <tag> 音乐 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>第一期：HailinMusicPlayer 安装使用指南</title>
+      <link href="/2025/08/08/%E7%AC%AC%E4%B8%80%E6%9C%9F%EF%BC%9A%E5%85%B3%E4%BA%8E%E5%A6%82%E4%BD%95%E4%B8%8B%E8%BD%BD%20HailinMusicPlayer%20%E4%BB%A5%E5%8F%8A%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/"/>
+      <url>/2025/08/08/%E7%AC%AC%E4%B8%80%E6%9C%9F%EF%BC%9A%E5%85%B3%E4%BA%8E%E5%A6%82%E4%BD%95%E4%B8%8B%E8%BD%BD%20HailinMusicPlayer%20%E4%BB%A5%E5%8F%8A%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/</url>
+      
+        <content type="html"><![CDATA[<!-- <div class="video-container">[视频内嵌代码]</div><style>.video-container { position: relative; padding-top: 56.25%; } .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }</style> --><h1 id="第一期：HailinMusicPlayer-安装使用指南"><a href="#第一期：HailinMusicPlayer-安装使用指南" class="headerlink" title="第一期：HailinMusicPlayer 安装使用指南"></a>第一期：HailinMusicPlayer 安装使用指南</h1><h2 id="一、下载软件包"><a href="#一、下载软件包" class="headerlink" title="一、下载软件包"></a>一、下载软件包</h2><h3 id="详细步骤："><a href="#详细步骤：" class="headerlink" title="详细步骤："></a>详细步骤：</h3><ol><li>访问<a href="https://openlist.hljs.qzz.io/">海林小喷壶官网</a></li><li>找到<code>HailinMusicPlayer.rar</code>下载链接</li><li>将文件保存到非系统盘（推荐D盘）</li></ol><p><img src="https://blogtc.hljs.qzz.io/1.jpg" alt="1.jpg"></p><blockquote><p><strong>重要提示</strong>：如果没有D盘，也可以放在其他盘，只要能找到下载好的压缩包就行。</p></blockquote><h3 id="如果觉得压缩包麻烦可以直接下载安装包："><a href="#如果觉得压缩包麻烦可以直接下载安装包：" class="headerlink" title="如果觉得压缩包麻烦可以直接下载安装包："></a>如果觉得压缩包麻烦可以直接下载安装包：</h3><p><img src="https://blogtc.hljs.qzz.io/%E7%AC%AC%E4%B8%80%E6%9C%9F%E8%A1%A5%E5%85%85%E5%9B%BE.png" alt="第一期补充图.png"></p><h2 id="二、创建安装目录"><a href="#二、创建安装目录" class="headerlink" title="二、创建安装目录"></a>二、创建安装目录</h2><ol><li>在D盘新建文件夹：<ul><li>右键D盘空白处 → 新建 → 文件夹</li><li>命名为<code>HailinMusicPlayer</code></li></ul></li></ol><p><img src="https://blogtc.hljs.qzz.io/2.jpg" alt="2.jpg"></p><ol start="2"><li>解压安装包：<ul><li>右键<code>.rar</code>文件 → 解压到当前文件夹</li><li>得到<code>HailinMusicPlayer-4.9.0-win-x64</code>目录</li></ul></li></ol><h2 id="三、安装过程详解"><a href="#三、安装过程详解" class="headerlink" title="三、安装过程详解"></a>三、安装过程详解</h2><ol><li>进入解压后的文件夹，双击安装程序：</li></ol><p><img src="https://blogtc.hljs.qzz.io/3.jpg" alt="3.jpg"></p><ol start="2"><li>点击”下一步”继续安装：</li></ol><p><img src="https://blogtc.hljs.qzz.io/4.jpg" alt="4.jpg"></p><ol start="3"><li>选择安装路径：<ul><li>点击”浏览”按钮</li><li>选择之前创建的<code>D:\HailinMusicPlayer</code></li></ul></li></ol><p><img src="https://blogtc.hljs.qzz.io/5.png" alt="5.png"></p><ol start="4"><li>确认安装位置：</li></ol><p><img src="https://blogtc.hljs.qzz.io/6.png" alt="6.png"></p><ol start="5"><li>开始安装：</li></ol><p><img src="https://blogtc.hljs.qzz.io/7.png" alt="7.png"></p><h2 id="四、安装后操作"><a href="#四、安装后操作" class="headerlink" title="四、安装后操作"></a>四、安装后操作</h2><ol><li>创建桌面快捷方式（可选）</li><li>首次运行建议：<ul><li>右键图标 → 以管理员身份运行</li><li>允许防火墙访问（如弹出提示）</li></ul></li></ol><h2 id="常见问题解答"><a href="#常见问题解答" class="headerlink" title="常见问题解答"></a>常见问题解答</h2><p>Q：安装失败怎么办？<br>A：请检查：</p><ol><li>安装路径是否包含中文</li><li>是否关闭了杀毒软件</li><li>关闭系统防火墙大概率可以解决安装不了的问题。</li></ol><blockquote><p>如需更多帮助，请联系站长邮箱：<a href="mailto:&#x68;&#x6c;&#120;&#x70;&#x79;&#64;&#x71;&#113;&#46;&#99;&#111;&#x6d;">hlxpy@qq.com</a></p></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> 各种资料 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 工具 </tag>
+            
+            <tag> 教程 </tag>
+            
+            <tag> HailinMusicPlayer </tag>
+            
+            <tag> 音乐 </tag>
             
         </tags>
       
@@ -149,37 +178,6 @@
             <tag> 影视 </tag>
             
             <tag> HaiLinTV </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>第二期：HailinMusicPlayer 使用指南</title>
-      <link href="/2025/08/08/%E7%AC%AC%E4%BA%8C%E6%9C%9F%EF%BC%9AHailinMusicPlayer%20%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/"/>
-      <url>/2025/08/08/%E7%AC%AC%E4%BA%8C%E6%9C%9F%EF%BC%9AHailinMusicPlayer%20%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/</url>
-      
-        <content type="html"><![CDATA[<!-- <div class="video-container">[视频内嵌代码]</div><style>.video-container { position: relative; padding-top: 56.25%; } .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }</style> --><h1 id="第二期：HailinMusicPlayer-使用指南"><a href="#第二期：HailinMusicPlayer-使用指南" class="headerlink" title="第二期：HailinMusicPlayer 使用指南"></a>第二期：HailinMusicPlayer 使用指南</h1><h2 id="一、使用网易云UID登录"><a href="#一、使用网易云UID登录" class="headerlink" title="一、使用网易云UID登录"></a>一、使用网易云<code>UID</code>登录</h2><p><img src="https://blogtc.hljs.qzz.io/%E7%99%BB%E5%BD%95%E6%96%B9%E5%BC%8F.jpg" alt="登录方式.jpg"></p><h2 id="二、关于邀请码系统"><a href="#二、关于邀请码系统" class="headerlink" title="二、关于邀请码系统"></a>二、关于邀请码系统</h2><h3 id="为什么需要邀请码？"><a href="#为什么需要邀请码？" class="headerlink" title="为什么需要邀请码？"></a>为什么需要邀请码？</h3><p>我们采用邀请码机制主要基于以下考虑：</p><ol><li><p><strong>保障优质体验</strong></p><ul><li>控制用户增长规模，确保服务器稳定运行</li><li>避免因用户激增导致的播放卡顿、延迟等问题</li><li>为每位用户保留充足的带宽资源</li></ul></li><li><p><strong>维护社区环境</strong></p><ul><li>筛选真正热爱音乐的核心用户</li><li>建立良好的音乐分享氛围</li><li>有效防止机器人和恶意注册</li></ul></li><li><p><strong>版权保护</strong></p><ul><li>合规管理音乐内容使用</li><li>尊重音乐人创作成果</li><li>建立可追溯的使用记录</li></ul></li></ol><blockquote><p>温馨提醒：本播放器为个人开发的学习项目，感谢您的理解与支持</p></blockquote><h2 id="三、获取邀请码方式"><a href="#三、获取邀请码方式" class="headerlink" title="三、获取邀请码方式"></a>三、获取邀请码方式</h2><h3 id="官方渠道"><a href="#官方渠道" class="headerlink" title="官方渠道"></a>官方渠道</h3><ul><li>定期在<a href="https://hlxpy.hljs.qzz.io/essay/">海林小盆友即刻短文</a>发放</li><li>关注官方动态获取限时邀请码</li><li>联系客服邮箱：<a href="mailto:&#104;&#x6c;&#x78;&#112;&#121;&#x40;&#113;&#x71;&#x2e;&#x63;&#x6f;&#109;">hlxpy@qq.com</a></li></ul><h3 id="当前可用邀请码"><a href="#当前可用邀请码" class="headerlink" title="当前可用邀请码"></a>当前可用邀请码</h3><p>邀请码：<strong>VIP001</strong></p><h2 id="四、获取邀请码"><a href="#四、获取邀请码" class="headerlink" title="四、获取邀请码"></a>四、获取邀请码</h2><ul><li>🛰搜索：<code>LYZ166024 </code></li><li>输入：<code>邀请码</code></li><li>即可获得邀请码</li></ul><h2 id="五、费用说明"><a href="#五、费用说明" class="headerlink" title="五、费用说明"></a>五、费用说明</h2><p>当前收取<code>0.98</code>元主要用于：</p><ul><li><code>0.98即可通过邀请码使用本软件</code></li><li>服务器基础运维费用</li><li>域名续费成本</li><li>基础功能维护更新</li></ul><p>我们承诺：<br>✓ 费用透明公开<br>✓ 无隐藏收费<br>✓ 持续优化体验</p><h2 id="六、常见问题"><a href="#六、常见问题" class="headerlink" title="六、常见问题"></a>六、常见问题</h2><p>Q：邀请码会失效吗？<br>A：目前发放的邀请码长期有效</p><p>Q：遇到技术问题怎么办？<br>A：欢迎随时联系🛰：<code>LYZ166024</code></p><p>感谢您选择<code>HailinMusicPlayer</code>！<br>我们将持续改进，为您提供更好的音乐体验。</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> 各种资料 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 工具 </tag>
-            
-            <tag> HailinMusicPlayer </tag>
-            
-            <tag> 教程 </tag>
-            
-            <tag> 音乐 </tag>
             
         </tags>
       
