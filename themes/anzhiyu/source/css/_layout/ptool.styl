@@ -96,6 +96,33 @@ if hexo-config('ptool.enable') == true
         border-radius: 8px;
         margin-bottom: 8px;
         border: var(--style-border-always);
+        position: relative;
+        
+        .qrcode-refresh
+          position: absolute;
+          top: 5px;
+          right: 5px;
+          width: 20px;
+          height: 20px;
+          background: rgba(0, 0, 0, 0.1);
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: 0.3s;
+          opacity: 0;
+          
+          &:hover
+            background: rgba(0, 0, 0, 0.2);
+            transform: scale(1.1);
+            
+          i
+            font-size: 12px;
+            color: #666;
+            
+      &:hover .qrcode-refresh
+        opacity: 1;
       .reward-dec 
         font-size: 12px;
 

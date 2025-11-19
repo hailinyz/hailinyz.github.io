@@ -14969,6 +14969,37 @@ blockquote {
   border-radius: 8px;
   margin-bottom: 8px;
   border: var(--style-border-always);
+  position: relative;
+}
+
+.share-link .share-main .share-main-all #qrcode .qrcode-refresh {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 20px;
+  height: 20px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.3s;
+  opacity: 0;
+}
+
+.share-link .share-main .share-main-all #qrcode .qrcode-refresh:hover {
+  background: rgba(0, 0, 0, 0.2);
+  transform: scale(1.1);
+}
+
+.share-link .share-main .share-main-all #qrcode .qrcode-refresh i {
+  font-size: 12px;
+  color: #666;
+}
+
+.share-link .share-main .share-main-all:hover #qrcode .qrcode-refresh {
+  opacity: 1;
 }
 .share-link .share-main .share-main-all .reward-dec {
   font-size: 12px;

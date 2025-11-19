@@ -1,0 +1,41 @@
+- class_name: 世界各地夕阳与风景
+  path_name: /wordScenery
+  type: 2
+  description: 因为到不了世界各地，所以请网友们发来了各地的夕阳与风景🌇。
+  cover: https://mongol-audio-2024-1366672334.cos.ap-guangzhou.myqcloud.com/fengjingyue.jpg
+  top_background: https://mongol-audio-2024-1366672334.cos.ap-guangzhou.myqcloud.com/fengjing.png
+  rowHeight: 220
+  limit: 10
+  lazyload: true
+  btnLazyload: false
+  url: false
+  top_link: /album
+  top_btn_text: 返回
+  album_list:
+    - date: 2025-08-03 01:00:00
+    #  content: 湘潭的一角。
+    #  address: 湖南湘潭
+    #  from: 再吃一口就减肥
+    #  image:
+    #    - https://bu.dusays.com/2023/04/09/64329399db122.webp
+    #- date: 2025-08-03 01:00:00
+      content: 松花江日落
+      address: 黑龙江哈尔滨
+      from: 海林小盆友
+      image:
+        - https://mongol-audio-2024-1366672334.cos.ap-guangzhou.myqcloud.com/fengjingyue.jpg
+        - https://mongol-audio-2024-1366672334.cos.ap-guangzhou.myqcloud.com/riluo.jpg
+
+- class_name: 我的日常
+  path_name: /dailyPhoto
+  type: 1
+  description: 这里存放的是有关我自己的一些沙雕生活与有趣的事情。
+  top_link: /album
+  top_btn_text: 返回
+  top_background: https://mongol-audio-2024-1366672334.cos.ap-guangzhou.myqcloud.com/qichangdiannao.jpg
+  cover: https://mongol-audio-2024-1366672334.cos.ap-guangzhou.myqcloud.com/richangye.jpg 
+  album_list:
+    - date: 2025-08-05
+      content: 小盆哈基米
+      image:
+        - https://mongol-audio-2024-1366672334.cos.ap-guangzhou.myqcloud.com/xiaopen.jpg

@@ -136,63 +136,8 @@ if site.data.about
               |  
               span.selfInfo-content(style='color:#b04fe6')=selfInfoContent3
       
-      .author-content
-        .author-content-item.personalities
-          - let {author_name, personality_type, photo_url, personality_img, name_url, personality_type_color} = item.personalities
-          .author-content-item-tips 性格
-          span.author-content-item-title= author_name
-          .title2(style=`color:${personality_type_color ? personality_type_color : "#ac899c"}`)= personality_type
-          .post-tips
-            | 在 
-            a(href='https://www.16personalities.com/', target='_blank', rel='noopener nofollow') 16personalities
-            |  了解更多关于 
-            a(target='_blank', rel='noopener external nofollow', href= name_url)= author_name
-          .image
-            img.no-lightbox(src=url_for(personality_img), alt='人格')
-        .author-content-item.myphoto
-          img.author-content-img.no-lightbox(alt='自拍', src=url_for(photo_url))
-      
-      .author-content
-        .author-content-item.maxim
-          - let {maxim_tips, maxim_top, maxim_bottom} = item.maxim
-          .author-content-item-tips=maxim_tips
-          span.maxim-title
-            span(style='opacity:.6;margin-bottom:8px')=maxim_top
-            |  
-            span=maxim_bottom
-        .author-content-item.buff
-          .card-content
-          - let {buff_tips, buff_top, buff_bottom} = item.buff
-            .author-content-item-tips=buff_tips
-            span.buff-title
-              span(style='opacity:.6;margin-bottom:8px')=buff_top
-              |  
-              span=buff_bottom
-          .card-background-icon
-            i.anzhiyufont.anzhiyu-icon-dice-d20
 
-      .author-content
-        - let {game_tips, game_title, game_uid, game_bg} = item.game
-        .author-content-item.game-yuanshen(style=`background: url(${game_bg}) top / cover no-repeat;`)
-          .card-content
-            .author-content-item-tips=game_tips
-            span.author-content-item-title=game_title
-            .content-bottom
-              .icon-group
-                .loading-bar(role='presentation', aria-hidden='true' style=`${game_title != "原神" ? "display: none": ""}`)
-              .tips.game-yuanshen-uid=game_uid
-        .author-content-item.comic-content
-          .card-content
-            - let {comic_tips, comic_title, comic_list} = item.comic
-            .author-content-item-tips=comic_tips
-            .author-content-item-title=comic_title
-            .comic-box
-              if comic_list
-                each i in comic_list
-                  a.comic-item(href=i.href, target="_blank", title=i.name)
-                    .comic-item-cover
-                      img(src=i.cover, alt=i.name)
-      
+
       .author-content
         - let {music_tips, music_title, music_link, music_bg} = item.music
         - let {like_tips, like_title, like_bottom, like_bg} = item.like
@@ -213,6 +158,10 @@ if site.data.about
                 i.anzhiyufont.anzhiyu-icon-arrow-circle-right
                 |  
                 span.banner-button-text 更多推荐
+
+
+
+
 
       if page.content
         .author-content

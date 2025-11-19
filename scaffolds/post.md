@@ -16,7 +16,7 @@ toc_style_simple: #【可选】显示 toc 简洁模式
 copyright: #【可选】显示文章版权模块
 copyright_author: #【可选】文章版权作者
 copyright_author_href: #【可选】作者链接
-copyright_url: #【可选】版权链接
+copyright_url: https://hailinyz.github.io/ #【可选】版权链接
 copyright_info: #【可选】版权声明文字
 mathjax: #【可选】显示 mathjax
 katex: #【可选】显示 katex

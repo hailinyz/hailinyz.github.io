@@ -33,6 +33,8 @@ if !theme.disable_top_img && page.top_img !== false
               .share-main-all
                 #qrcode(title=url)
                 .reward-dec 使用手机访问这篇文章
+                .qrcode-refresh(title='刷新二维码' onclick='anzhiyu.qrcodeCreate()')
+                  i.anzhiyufont.anzhiyu-icon-refresh
       if theme.ptool.share_weibo
         .share-link.weibo
           a.share-button(target='_blank' href=`https://service.weibo.com/share/share.php?title=${site_title}&url=${url}&pic=${bg_img}` rel='external nofollow noreferrer noopener')

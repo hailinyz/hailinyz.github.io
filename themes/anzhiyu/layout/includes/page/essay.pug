@@ -14,8 +14,9 @@ if site.data.essay
       #bber
         section.timeline.page-1
           ul#waterfall.list
-            each item, index in i.essay_list
-              if index < i.limit
+            if i.essay_list
+              each item, index in i.essay_list
+                if index < i.limit
                 li.bber-item
                   .bber-content
                     p.datacont= item.content

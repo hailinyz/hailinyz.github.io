@@ -97,7 +97,7 @@ div
   //- 即刻依赖waterfall
   script(async data-pjax src=url_for(theme.asset.waterfall))
   //- 文章二维码
-  script(src='https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/qrcodejs/1.0.0/qrcode.min.js')
+  script(src='https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/qrcodejs/1.0.0/qrcode.min.js' onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js'")
   //- 右键菜单
   if (theme.rightClickMenu && theme.rightClickMenu.enable)
     script(src=url_for(theme.asset.right_click_menu_js))
@@ -129,3 +129,65 @@ div
 
   if is_current("/") && theme.greetingBox.enable
     #greetingBox
+
+
+
+
+
+// 事件跟踪示例
+script.
+  // 通用事件跟踪函数
+  window.trackEvent = (category, action, label) => {
+    gtag('event', action, {
+      event_category: category,
+      event_label: label,
+      transport_type: 'beacon'
+    });
+  };
+
+  // 影视聚合点击跟踪
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.movie-link').forEach(link => {
+      link.addEventListener('click', () => {
+        trackEvent('Movie', 'click', link.dataset.title);
+      });
+    });
+  });
+
+  // 音乐播放器事件跟踪
+  document.addEventListener('DOMContentLoaded', function() {
+    const musicPlayer = document.querySelector('.nav_music');
+    if(musicPlayer) {
+      musicPlayer.addEventListener('click', () => {
+        trackEvent('Music', 'player_click', 'Nav Music Player');
+      });
+    }
+  });
+
+  // PJAX兼容处理
+  document.addEventListener('pjax:complete', function() {
+    document.querySelectorAll('.movie-link').forEach(link => {
+      link.addEventListener('click', () => {
+        trackEvent('Movie', 'click', link.dataset.title);
+      });
+    });
+  });
+
+
+
+
+  // 滚动深度跟踪
+  window.addEventListener('scroll', function() {
+    const scrollPercent = (window.scrollY / document.body.scrollHeight * 100).toFixed(2);
+    if(scrollPercent > 25 && !window._25pTracked) {
+      trackEvent('Engagement', 'scroll', '25%');
+      window._25pTracked = true;
+    }
+    if(scrollPercent > 75 && !window._75pTracked) {
+      trackEvent('Engagement', 'scroll', '75%');
+      window._75pTracked = true;
+    }
+  });
+
+
+

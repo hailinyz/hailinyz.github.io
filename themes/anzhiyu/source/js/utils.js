@@ -1151,17 +1151,38 @@ const anzhiyu = {
 
   // 创建二维码
   qrcodeCreate: function () {
-    if (document.getElementById("qrcode")) {
-      document.getElementById("qrcode").innerHTML = "";
-      var qrcode = new QRCode(document.getElementById("qrcode"), {
-        text: window.location.href,
-        width: 250,
-        height: 250,
-        colorDark: "#000",
-        colorLight: "#ffffff",
-        correctLevel: QRCode.CorrectLevel.H,
-      });
-    }
+    // 延迟执行，确保QRCode库和DOM元素都已准备好
+    setTimeout(() => {
+      const qrcodeElement = document.getElementById("qrcode");
+      if (qrcodeElement && typeof QRCode !== 'undefined') {
+        try {
+          // 清空现有内容
+          qrcodeElement.innerHTML = "";
+          
+          // 创建二维码
+          new QRCode(qrcodeElement, {
+            text: window.location.href,
+            width: 150,
+            height: 150,
+            colorDark: "#000",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H,
+          });
+          
+          console.log('二维码生成成功');
+        } catch (error) {
+          console.error('二维码生成失败:', error);
+          // 如果生成失败，显示错误信息
+          qrcodeElement.innerHTML = '<div style="color: #999; font-size: 12px; text-align: center; line-height: 150px;">二维码生成失败</div>';
+        }
+      } else {
+        console.warn('二维码元素或QRCode库未找到，延迟重试...');
+        // 如果元素或库不存在，延迟重试
+        if (qrcodeElement && typeof QRCode === 'undefined') {
+          setTimeout(() => anzhiyu.qrcodeCreate(), 1000);
+        }
+      }
+    }, 500); // 延迟500ms执行
   },
 
   // 判断是否在el内
