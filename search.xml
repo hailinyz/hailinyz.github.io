@@ -4,6 +4,52 @@
   
     
     <entry>
+      <title></title>
+      <link href="/2025/11/28/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%20-%20Seata/"/>
+      <url>/2025/11/28/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%20-%20Seata/</url>
+      
+        <content type="html"><![CDATA[<p>在分布式系统中，如果一个业务需要多个服务合作完成，而且每一个服务都有事务，多个事务必须同时成功或失败，这样的事务就是<strong>分布式事务</strong>。其中的每个服务的事务就是一个<strong>分支事务</strong>。整个业务称为<strong>全局事务</strong>。</p><p><img src="/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%20-%20Seata-media/1579502a79511d60e37b2abf29820423a2aa4379.png"></p><p>应该是都成功或者都失败才对</p><p>分布式事务解决思路：Seata架构</p><p>相互之间不知道对方成没成功，想办法让事务分支之间感知到彼此的事务状态，才能保证状态一致。</p><h2 id="Seata架构"><a href="#Seata架构" class="headerlink" title="Seata架构"></a>Seata架构</h2><ul><li>TC - 事务协调者</li><li>TM - 事务管理器</li><li>RM - 资源管理器<br><img src="/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%20-%20Seata-media/f1d7c0086b259af70e1f3c03197d6298c7bc7b10.png"></li></ul><h2 id="Dcoker部署Seata"><a href="#Dcoker部署Seata" class="headerlink" title="Dcoker部署Seata"></a>Dcoker部署Seata</h2><ol><li>注意：部署之前先看有哪些网桥</li></ol><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker network <span class="built_in">ls</span></span><br></pre></td></tr></table></figure><ol start="2"><li>然后看自己的mysql容器是不是在这个网桥下：</li></ol><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker inspect mysql</span><br></pre></td></tr></table></figure><p>我这里查出来的是在hmall下<br><img src="/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%20-%20Seata-media/8394b4207e48c570b92b90d4641404a2a977cb5d.png"></p><ol start="3"><li>再查以下nacos容器，我这里查出来是不在hmall里的<br><img src="/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%20-%20Seata-media/a4ee6597718096f9b12ff349bb2465815ad39541.png"><br>如果不在就可以把已经存在的加进来：</li></ol><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker network connect hmall nacos</span><br></pre></td></tr></table></figure><p>最后执行如下命令即可完成seata的容器化部署</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">docker run <span class="literal">--name</span> seata \</span><br><span class="line"><span class="literal">-p</span> <span class="number">8099</span>:<span class="number">8099</span> \</span><br><span class="line"><span class="literal">-p</span> <span class="number">7099</span>:<span class="number">7099</span> \</span><br><span class="line"><span class="literal">-e</span> SEATA_IP=<span class="number">192.168</span>.<span class="number">100.0</span> \  <span class="comment"># 改成你的虚拟机IP</span></span><br><span class="line"><span class="literal">-v</span> ./seata:/seata<span class="literal">-server</span>/resources \</span><br><span class="line"><span class="literal">--privileged</span>=true \</span><br><span class="line"><span class="literal">--network</span> hmall \  <span class="comment"># 改成你Nacos所在的默认网桥（原命令是hm-net，你没有这个自定义网络）</span></span><br><span class="line"><span class="literal">-d</span> \</span><br><span class="line">seataio/seata<span class="literal">-server</span>:<span class="number">1.5</span>.<span class="number">2</span></span><br></pre></td></tr></table></figure><p>部署完成后就可以访问：你的虚拟机地址:7099 访问，用户名密码默认为：admin<br><img src="/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%20-%20Seata-media/9d306ee87f8f49d2a7314984da97514c95b8d769.png"></p><h2 id="微服务集成Seata"><a href="#微服务集成Seata" class="headerlink" title="微服务集成Seata"></a>微服务集成Seata</h2><ol><li>引依赖</li></ol><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--统一配置管理--&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-alibaba-nacos-config<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!--读取bootstrap文件--&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-bootstrap<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!--seata--&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-alibaba-seata<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure><ol start="2"><li>在application.yml中配置TC服务地址</li></ol><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">seata:</span></span><br><span class="line">  <span class="attr">registry:</span> <span class="comment"># TC服务注册中心的配置，微服务根据这些信息去注册中心获取tc服务地址</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">nacos</span> <span class="comment"># 注册中心类型 nacos</span></span><br><span class="line">    <span class="attr">nacos:</span></span><br><span class="line">      <span class="attr">server-addr:</span> <span class="number">192.168</span><span class="number">.150</span><span class="number">.101</span><span class="string">:8848</span> <span class="comment"># nacos地址</span></span><br><span class="line">      <span class="attr">namespace:</span> <span class="string">&quot;&quot;</span> <span class="comment"># namespace，默认为空</span></span><br><span class="line">      <span class="attr">group:</span> <span class="string">DEFAULT_GROUP</span> <span class="comment"># 分组，默认是DEFAULT_GROUP</span></span><br><span class="line">      <span class="attr">application:</span> <span class="string">seata-server</span> <span class="comment"># seata服务名称</span></span><br><span class="line">      <span class="attr">username:</span> <span class="string">nacos</span></span><br><span class="line">      <span class="attr">password:</span> <span class="string">nacos</span></span><br><span class="line">  <span class="attr">tx-service-group:</span> <span class="string">hmall</span> <span class="comment"># 事务组名称</span></span><br><span class="line">  <span class="attr">service:</span></span><br><span class="line">    <span class="attr">vgroup-mapping:</span> <span class="comment"># 事务组与tc集群的映射关系</span></span><br><span class="line">      <span class="attr">hmall:</span> <span class="string">&quot;default&quot;</span></span><br></pre></td></tr></table></figure><p>这些配置呢所有事务的参与者都要去配啊，所以我们抽取到一个nacos中的共享配置<br>这时候就有同学问了，这么多依赖直接放在common不就行了吗，<strong>非也非也</strong><br>并不是每个微服务都会有分布式事务，所以哪个微服务用到就往哪个引入就行了</p><h2 id="Seata解决分布式事务提供了不同的模式"><a href="#Seata解决分布式事务提供了不同的模式" class="headerlink" title="Seata解决分布式事务提供了不同的模式"></a>Seata解决分布式事务提供了不同的模式</h2><h2 id="XA模式"><a href="#XA模式" class="headerlink" title="XA模式"></a>XA模式</h2><p>原理：当微服务<strong>执行sql</strong>的时候还没有提交，会先<strong>上锁</strong>等待，等待TC检查事务状态之后才会<strong>解锁</strong>提交，<br>确保大家是同时成功同时失败的，因为有两阶段</p><ul><li>一阶段的工作<br>①RM注册分支事务到TC<br>②RM执行分支业务sql但不提交<br>③RM报告执行状态到TC</li></ul><ul><li>二阶段的工作<br>①TC检测各分支事务执行状态<br>a.  如果有成功，通知所有RM事务提交事务<br>b.  如果有失败，通知所有RM事务回滚事务<br>②RM接收TC指令，提交或回滚事务<br><img src="/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%20-%20Seata-media/1181bbee7c8b6b56132694bfbbebc9a79139baf3.png"><br>优点：确保了ACID的特性，强一致<br>缺点： <strong>上锁</strong>等待（双刃剑），有些业务是串行执行，每个分支都耗时，所以第一个分支久等了很久，就降低了性能。依赖于关系型数据库实现事务，如果有些数据库不支持XA模式，那就很尴尬了。</li></ul><h3 id="实现XA模式"><a href="#实现XA模式" class="headerlink" title="实现XA模式"></a>实现XA模式</h3><ol><li>修改application.yml共享文件（每个参与事务的微服务），开启XA模式</li></ol><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">seata:</span></span><br><span class="line">  <span class="attr">data-source-proxy-mode:</span> <span class="string">XA</span></span><br></pre></td></tr></table></figure><ol start="2"><li>给发起全局事务的入口方法添加@GloablTransactional注解<br><img src="/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%20-%20Seata-media/51f5372ed1a1bf88b90f9ddaff01f4ae43c92bf9.png"></li></ol><h2 id="AT模式-最终一致"><a href="#AT模式-最终一致" class="headerlink" title="AT模式- 最终一致"></a>AT模式- 最终一致</h2><pre><code>Seata主推的是AT模式，AT模式同样是分阶段提交的事务模型，不过弥补了XA模式中资源锁定周期过长的缺陷。</code></pre><p>在进行RM操作前都是和XA模式一致的</p><p>阶段一RM的工作：<br>① 注册分支事务<br>② 记录undo-log（数据快照）<br>③ 执行业务sql并提交<br>④ 报告事务状态</p><p>阶段二提交时RM的工作：<br>① 删除undo-log即可<br>阶段二回滚时RM的工作：<br>① 根据undo-log恢复数据到更新前<br><img src="/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%20-%20Seata-media/ee82a8e0376a4c47edcbc8af6801c77ef1f865f1.png"><br><strong>鱼和熊掌不可兼得</strong></p><h3 id="实现AT模式"><a href="#实现AT模式" class="headerlink" title="实现AT模式"></a>实现AT模式</h3><ol><li>添加需要分布式事务对应微服务的undo-log到微服务对应的数据库中</li><li>修改application.yml文件，将事务模式修改为AT模式</li></ol>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>微服务保护- Sentinel流控</title>
+      <link href="/2025/11/25/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4-%20Sentinel%E6%B5%81%E6%8E%A7/"/>
+      <url>/2025/11/25/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4-%20Sentinel%E6%B5%81%E6%8E%A7/</url>
+      
+        <content type="html"><![CDATA[<h1 id="微服务保护-Sentinel流控"><a href="#微服务保护-Sentinel流控" class="headerlink" title="微服务保护- Sentinel流控"></a>微服务保护- Sentinel流控</h1><p>Sentinel 是阿里巴巴开源的一款微服务控制组件。官网地址：[[<a href="https://sentinelguard.io/zh-cn/index.html/]/]">https://sentinelguard.io/zh-cn/index.html\]\]</a></p><p>启动准备好的sentinel jar包</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java <span class="literal">-Dserver</span>.port=<span class="number">8090</span> <span class="literal">-Dcsp</span>.sentinel.dashboard.server=localhost:<span class="number">8090</span> <span class="literal">-Dproject</span>.name=sentinel<span class="literal">-dashboard</span> <span class="literal">-jar</span> sentinel<span class="literal">-dashboard</span>.jar</span><br></pre></td></tr></table></figure><p><img src="https://tc.hailin.ip-ddns.com/file/blog/1764319150328_6ea5f1de4994a983ae59fc754d9bb063c6470a44.png" alt="6ea5f1de4994a983ae59fc754d9bb063c6470a44.png"><br>用户密码默认是sentinel</p><h2 id="整合到微服务"><a href="#整合到微服务" class="headerlink" title="整合到微服务"></a>整合到微服务</h2><ol><li>引入依赖</li></ol><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--sentinel--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-alibaba-sentinel<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure><ol><li>配置控制台</li></ol><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">cloud:</span> </span><br><span class="line">    <span class="attr">sentinel:</span></span><br><span class="line">      <span class="attr">transport:</span></span><br><span class="line">        <span class="attr">dashboard:</span> <span class="string">localhost:8090</span></span><br></pre></td></tr></table></figure><h3 id="簇点链路"><a href="#簇点链路" class="headerlink" title="簇点链路"></a>簇点链路</h3><p>簇点链路就是单机调用链路。是一次请求进入服务后经过的每一个被Sentinel监控的资源链。默认Sentinel会监控SpringMVC的每一个Endpoint（http接口）。限流、熔断等都是针对簇点链路中的<strong>资源</strong>设置的。而资源名默认就是接口的请求路径。</p><p>Restful风格的API请求路径一般都相同，这会导致簇点资源名称重复。因此我们要修改配置，把请求方式+请求路径作为簇点资源名称:</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">sentinel:</span></span><br><span class="line">      <span class="attr">transport:</span></span><br><span class="line">        <span class="attr">dashboard:</span> <span class="string">localhost:8090</span></span><br><span class="line">      <span class="attr">http-method-specify:</span> <span class="literal">true</span> <span class="comment"># 开启请求方式前缀</span></span><br></pre></td></tr></table></figure><h2 id="请求限流"><a href="#请求限流" class="headerlink" title="请求限流"></a>请求限流</h2><p>如图操作即可<br><img src="https://tc.hailin.ip-ddns.com/file/blog/1764319148066_b38d2d97ed1e0e525418ab684cc4ac2a81d80d39.png" alt="b38d2d97ed1e0e525418ab684cc4ac2a81d80d39.png"></p><h2 id="线程隔离"><a href="#线程隔离" class="headerlink" title="线程隔离"></a>线程隔离</h2><p>当商品服务出现阻塞或故障时，调用商品服务的购物车服务可能因此而被拖慢，甚至资源耗尽。所以必须限制购物车服务中查询这个业务的可用线程数，实现线程隔离。</p><p>现在我们假设说这个商品服务出现了<strong>故障</strong><br><img src="https://tc.hailin.ip-ddns.com/file/blog/1764319155165_15bfceb45ebd85779a5b04a01edc8a66112e32a5.png" alt="15bfceb45ebd85779a5b04a01edc8a66112e32a5.png"><br>它的故障我们不说是直接宕机这种啊，我们就说是他的业务不知道什么原因（可能是数据库问题或者网路原因)导致查询的特别慢，可能2~3秒才能处理一个请求，这时候查询购物车的这个业务就得等待商品服务返回的结果，</p><p>如果现在查询购物车的并发很高，就占用了Tomcat的资源，可能会导致整个购物车服务资源耗尽 别的业务1想查询别的业务就进不来了，然后购物车服务也发生类似慢的<strong>故障</strong>，那么调用购物车的服务的其他服务也有可能出现故障，这时候就会出现<strong>雪崩</strong></p><p><strong>所以用到了线程隔离 – 线程隔离也属于流量控制的一部分</strong></p><p>如图操作即可<br><img src="https://tc.hailin.ip-ddns.com/file/blog/1764319146880_b3b16048e839b54aedfcdcc2237089ab1eb642a3.png" alt="b3b16048e839b54aedfcdcc2237089ab1eb642a3.png"></p><p>被隔离的这个资源直接就不可用了，就好比咱们查询购物车直接查不到了，这就很尴尬，我们怎么解决呢？</p><h2 id="Fallback"><a href="#Fallback" class="headerlink" title="Fallback"></a>Fallback</h2><p><img src="https://tc.hailin.ip-ddns.com/file/blog/1764319175864_935bca3f00dbfe0b00c2de8493941ca15036d29e.png" alt="935bca3f00dbfe0b00c2de8493941ca15036d29e.png"></p><ol><li>将FeignClient作为Sentinel的簇点资源</li></ol><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">feign:</span></span><br><span class="line">  <span class="attr">sentinel:</span></span><br><span class="line">    <span class="attr">enabled:</span> <span class="literal">true</span> <span class="comment"># 开启feign对sentinel的支持</span></span><br></pre></td></tr></table></figure><ol start="2"><li>FeignClient 的 Fallback有两种配置方式：<br>方式一：</li></ol><ul><li>FallbackFactory，可以对远程调用的异常做处理，永昌都会选择这种<br>方式二：</li><li>FallbackClass，无法对远程调用的异常做处理</li></ul><h2 id="服务熔断"><a href="#服务熔断" class="headerlink" title="服务熔断"></a>服务熔断</h2><p>仅仅做线程隔离是不够的，还要进行服务熔断，因为既然知道商品服务已经挂了，还去访问他，每次都是很久才返回，就很尴尬，所以用到了服务熔断，进一步节省资源</p><p><img src="https://tc.hailin.ip-ddns.com/file/blog/1764319147163_83134ced5d24019e58014f21bf6d0be43f3e4287.png" alt="83134ced5d24019e58014f21bf6d0be43f3e4287.png"></p><p><strong>断路器</strong>熔断状态流转图：<br><img src="https://tc.hailin.ip-ddns.com/file/blog/1764319149057_e451666596e41ffb5484b1889b103b93b8576a4b.png" alt="e451666596e41ffb5484b1889b103b93b8576a4b.png"></p><hr>]]></content>
+      
+      
+      <categories>
+          
+          <category> Sentinel </category>
+          
+          <category> SpringCloud </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 微服务 </tag>
+            
+            <tag> Java </tag>
+            
+            <tag> Sentinel </tag>
+            
+            <tag> 微服务保护 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>雪崩问题产生的原因是什么？</title>
       <link href="/2025/11/24/%E9%9B%AA%E5%B4%A9%E9%97%AE%E9%A2%98%E4%BA%A7%E7%94%9F%E7%9A%84%E5%8E%9F%E5%9B%A0%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/"/>
       <url>/2025/11/24/%E9%9B%AA%E5%B4%A9%E9%97%AE%E9%A2%98%E4%BA%A7%E7%94%9F%E7%9A%84%E5%8E%9F%E5%9B%A0%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/</url>
@@ -24,11 +70,11 @@
             
             <tag> Java </tag>
             
-            <tag> 雪崩 </tag>
-            
             <tag> Sentinel </tag>
             
             <tag> 微服务保护 </tag>
+            
+            <tag> 雪崩 </tag>
             
         </tags>
       
@@ -151,37 +197,6 @@
     
     
     <entry>
-      <title>Docker 自定义镜像和一键部署</title>
-      <link href="/2025/11/21/Docker%20%E8%87%AA%E5%AE%9A%E4%B9%89%E9%95%9C%E5%83%8F%E5%92%8C%E4%B8%80%E9%94%AE%E9%83%A8%E7%BD%B2/"/>
-      <url>/2025/11/21/Docker%20%E8%87%AA%E5%AE%9A%E4%B9%89%E9%95%9C%E5%83%8F%E5%92%8C%E4%B8%80%E9%94%AE%E9%83%A8%E7%BD%B2/</url>
-      
-        <content type="html"><![CDATA[<h1 id="Docker-自定义镜像和一键部署"><a href="#Docker-自定义镜像和一键部署" class="headerlink" title="Docker 自定义镜像和一键部署"></a>Docker 自定义镜像和一键部署</h1><p><strong>自定义镜像就是包含了&#x3D;&#x3D;应用程序、程序运行的系统函数库、运行配置等文件&#x3D;&#x3D;的文件包。构建镜像的过程其实就是把上述文件&#x3D;&#x3D;打包&#x3D;&#x3D;的过程</strong></p><p>镜像是分层的，有入口、出口，还有一些配置的中间层</p><h2 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h2><p>假如自定义网络的容器才能通过容器名互相访问，Docker的网络操作命令如下</p><table><thead><tr><th>命令</th><th>说明</th><th>文档地址</th></tr></thead><tbody><tr><td><code>docker network create</code></td><td>创建一个网络</td><td><a href="https://docs.docker.com/engine/reference/commandline/network_create/">docker network create</a></td></tr><tr><td><code>docker network ls</code></td><td>查看所有网络</td><td><a href="https://docs.docker.com/engine/reference/commandline/network_ls/">docker network ls</a></td></tr><tr><td><code>docker network rm</code></td><td>删除指定网络</td><td><a href="https://docs.docker.com/engine/reference/commandline/network_rm/">docker network rm</a></td></tr><tr><td><code>docker network prune</code></td><td>清除未使用的网络</td><td><a href="https://docs.docker.com/engine/reference/commandline/network_prune/">docker network prune</a></td></tr><tr><td><code>docker network connect</code></td><td>使指定容器连接加入某网络</td><td><a href="https://docs.docker.com/engine/reference/commandline/network_connect/">docker network connect</a></td></tr><tr><td><code>docker network disconnect</code></td><td>使指定容器连接离开某网络</td><td><a href="https://docs.docker.com/engine/reference/commandline/network_disconnect/">docker network disconnect</a></td></tr><tr><td><code>docker network inspect</code></td><td>查看网络详细信息</td><td><a href="https://docs.docker.com/engine/reference/commandline/network_inspect/">docker network inspect</a></td></tr></tbody></table><h2 id="部署后端项目"><a href="#部署后端项目" class="headerlink" title="部署后端项目"></a>部署后端项目</h2><h2 id="部署前端项目"><a href="#部署前端项目" class="headerlink" title="部署前端项目"></a>部署前端项目</h2><h2 id="注意：MYSQL、后端、前端都要在同一个网段内"><a href="#注意：MYSQL、后端、前端都要在同一个网段内" class="headerlink" title="注意：MYSQL、后端、前端都要在同一个网段内"></a>注意：MYSQL、后端、前端都要在同一个网段内</h2><p>以上手动部署太过复杂，没有整体性没有管理性，所以有了：+++++++++</p><h2 id="11111-DockerCompose一键部署"><a href="#11111-DockerCompose一键部署" class="headerlink" title="11111.DockerCompose一键部署"></a>11111.DockerCompose一键部署</h2><p>不仅可以进行单体项目部署，还可以集群部署<br>docker compose …<br>后端开发人员不需要进行太多理解，这是韵味的事</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> Docker </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 微服务 </tag>
-            
-            <tag> Docker </tag>
-            
-            <tag> Java </tag>
-            
-            <tag> Compose </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Docker快速入门</title>
       <link href="/2025/11/21/Docker%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/"/>
       <url>/2025/11/21/Docker%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/</url>
@@ -261,6 +276,37 @@
             <tag> Docker </tag>
             
             <tag> Java </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Docker 自定义镜像和一键部署</title>
+      <link href="/2025/11/21/Docker%20%E8%87%AA%E5%AE%9A%E4%B9%89%E9%95%9C%E5%83%8F%E5%92%8C%E4%B8%80%E9%94%AE%E9%83%A8%E7%BD%B2/"/>
+      <url>/2025/11/21/Docker%20%E8%87%AA%E5%AE%9A%E4%B9%89%E9%95%9C%E5%83%8F%E5%92%8C%E4%B8%80%E9%94%AE%E9%83%A8%E7%BD%B2/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Docker-自定义镜像和一键部署"><a href="#Docker-自定义镜像和一键部署" class="headerlink" title="Docker 自定义镜像和一键部署"></a>Docker 自定义镜像和一键部署</h1><p><strong>自定义镜像就是包含了&#x3D;&#x3D;应用程序、程序运行的系统函数库、运行配置等文件&#x3D;&#x3D;的文件包。构建镜像的过程其实就是把上述文件&#x3D;&#x3D;打包&#x3D;&#x3D;的过程</strong></p><p>镜像是分层的，有入口、出口，还有一些配置的中间层</p><h2 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h2><p>假如自定义网络的容器才能通过容器名互相访问，Docker的网络操作命令如下</p><table><thead><tr><th>命令</th><th>说明</th><th>文档地址</th></tr></thead><tbody><tr><td><code>docker network create</code></td><td>创建一个网络</td><td><a href="https://docs.docker.com/engine/reference/commandline/network_create/">docker network create</a></td></tr><tr><td><code>docker network ls</code></td><td>查看所有网络</td><td><a href="https://docs.docker.com/engine/reference/commandline/network_ls/">docker network ls</a></td></tr><tr><td><code>docker network rm</code></td><td>删除指定网络</td><td><a href="https://docs.docker.com/engine/reference/commandline/network_rm/">docker network rm</a></td></tr><tr><td><code>docker network prune</code></td><td>清除未使用的网络</td><td><a href="https://docs.docker.com/engine/reference/commandline/network_prune/">docker network prune</a></td></tr><tr><td><code>docker network connect</code></td><td>使指定容器连接加入某网络</td><td><a href="https://docs.docker.com/engine/reference/commandline/network_connect/">docker network connect</a></td></tr><tr><td><code>docker network disconnect</code></td><td>使指定容器连接离开某网络</td><td><a href="https://docs.docker.com/engine/reference/commandline/network_disconnect/">docker network disconnect</a></td></tr><tr><td><code>docker network inspect</code></td><td>查看网络详细信息</td><td><a href="https://docs.docker.com/engine/reference/commandline/network_inspect/">docker network inspect</a></td></tr></tbody></table><h2 id="部署后端项目"><a href="#部署后端项目" class="headerlink" title="部署后端项目"></a>部署后端项目</h2><h2 id="部署前端项目"><a href="#部署前端项目" class="headerlink" title="部署前端项目"></a>部署前端项目</h2><h2 id="注意：MYSQL、后端、前端都要在同一个网段内"><a href="#注意：MYSQL、后端、前端都要在同一个网段内" class="headerlink" title="注意：MYSQL、后端、前端都要在同一个网段内"></a>注意：MYSQL、后端、前端都要在同一个网段内</h2><p>以上手动部署太过复杂，没有整体性没有管理性，所以有了：+++++++++</p><h2 id="11111-DockerCompose一键部署"><a href="#11111-DockerCompose一键部署" class="headerlink" title="11111.DockerCompose一键部署"></a>11111.DockerCompose一键部署</h2><p>不仅可以进行单体项目部署，还可以集群部署<br>docker compose …<br>后端开发人员不需要进行太多理解，这是韵味的事</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Docker </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 微服务 </tag>
+            
+            <tag> Docker </tag>
+            
+            <tag> Java </tag>
+            
+            <tag> Compose </tag>
             
         </tags>
       
@@ -443,73 +489,11 @@
     
     
     <entry>
-      <title>第二期：HailinMusicPlayer 使用指南</title>
-      <link href="/2025/08/08/%E7%AC%AC%E4%BA%8C%E6%9C%9F%EF%BC%9AHailinMusicPlayer%20%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/"/>
-      <url>/2025/08/08/%E7%AC%AC%E4%BA%8C%E6%9C%9F%EF%BC%9AHailinMusicPlayer%20%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/</url>
-      
-        <content type="html"><![CDATA[<!-- <div class="video-container">[视频内嵌代码]</div><style>.video-container { position: relative; padding-top: 56.25%; } .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }</style> --><h1 id="第二期：HailinMusicPlayer-使用指南"><a href="#第二期：HailinMusicPlayer-使用指南" class="headerlink" title="第二期：HailinMusicPlayer 使用指南"></a>第二期：HailinMusicPlayer 使用指南</h1><h2 id="一、使用网易云UID登录"><a href="#一、使用网易云UID登录" class="headerlink" title="一、使用网易云UID登录"></a>一、使用网易云<code>UID</code>登录</h2><p><img src="https://blogtc.hljs.qzz.io/%E7%99%BB%E5%BD%95%E6%96%B9%E5%BC%8F.jpg" alt="登录方式.jpg"></p><h2 id="二、关于邀请码系统"><a href="#二、关于邀请码系统" class="headerlink" title="二、关于邀请码系统"></a>二、关于邀请码系统</h2><h3 id="为什么需要邀请码？"><a href="#为什么需要邀请码？" class="headerlink" title="为什么需要邀请码？"></a>为什么需要邀请码？</h3><p>我们采用邀请码机制主要基于以下考虑：</p><ol><li><p><strong>保障优质体验</strong></p><ul><li>控制用户增长规模，确保服务器稳定运行</li><li>避免因用户激增导致的播放卡顿、延迟等问题</li><li>为每位用户保留充足的带宽资源</li></ul></li><li><p><strong>维护社区环境</strong></p><ul><li>筛选真正热爱音乐的核心用户</li><li>建立良好的音乐分享氛围</li><li>有效防止机器人和恶意注册</li></ul></li><li><p><strong>版权保护</strong></p><ul><li>合规管理音乐内容使用</li><li>尊重音乐人创作成果</li><li>建立可追溯的使用记录</li></ul></li></ol><blockquote><p>温馨提醒：本播放器为个人开发的学习项目，感谢您的理解与支持</p></blockquote><h2 id="三、获取邀请码方式"><a href="#三、获取邀请码方式" class="headerlink" title="三、获取邀请码方式"></a>三、获取邀请码方式</h2><h3 id="官方渠道"><a href="#官方渠道" class="headerlink" title="官方渠道"></a>官方渠道</h3><ul><li>定期在<a href="https://hlxpy.hljs.qzz.io/essay/">海林小盆友即刻短文</a>发放</li><li>关注官方动态获取限时邀请码</li><li>联系客服邮箱：<a href="mailto:&#104;&#108;&#x78;&#x70;&#121;&#64;&#113;&#113;&#x2e;&#99;&#111;&#109;">hlxpy@qq.com</a></li></ul><h3 id="当前可用邀请码"><a href="#当前可用邀请码" class="headerlink" title="当前可用邀请码"></a>当前可用邀请码</h3><p>邀请码：<strong>VIP001</strong></p><h2 id="四、获取邀请码"><a href="#四、获取邀请码" class="headerlink" title="四、获取邀请码"></a>四、获取邀请码</h2><ul><li>🛰搜索：<code>LYZ166024 </code></li><li>输入：<code>邀请码</code></li><li>即可获得邀请码</li></ul><h2 id="五、费用说明"><a href="#五、费用说明" class="headerlink" title="五、费用说明"></a>五、费用说明</h2><p>当前收取<code>0.98</code>元主要用于：</p><ul><li><code>0.98即可通过邀请码使用本软件</code></li><li>服务器基础运维费用</li><li>域名续费成本</li><li>基础功能维护更新</li></ul><p>我们承诺：<br>✓ 费用透明公开<br>✓ 无隐藏收费<br>✓ 持续优化体验</p><h2 id="六、常见问题"><a href="#六、常见问题" class="headerlink" title="六、常见问题"></a>六、常见问题</h2><p>Q：邀请码会失效吗？<br>A：目前发放的邀请码长期有效</p><p>Q：遇到技术问题怎么办？<br>A：欢迎随时联系🛰：<code>LYZ166024</code></p><p>感谢您选择<code>HailinMusicPlayer</code>！<br>我们将持续改进，为您提供更好的音乐体验。</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> 影视音乐 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 工具 </tag>
-            
-            <tag> HailinMusicPlayer </tag>
-            
-            <tag> 教程 </tag>
-            
-            <tag> 音乐 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>第四期：HailinTV 网站进阶指南</title>
-      <link href="/2025/08/08/%E7%AC%AC%E5%9B%9B%E6%9C%9F%EF%BC%9AHailinTV-%E7%BD%91%E7%AB%99%E8%BF%9B%E9%98%B6%E6%8C%87%E5%8D%97/"/>
-      <url>/2025/08/08/%E7%AC%AC%E5%9B%9B%E6%9C%9F%EF%BC%9AHailinTV-%E7%BD%91%E7%AB%99%E8%BF%9B%E9%98%B6%E6%8C%87%E5%8D%97/</url>
-      
-        <content type="html"><![CDATA[<!-- <div class="video-container">[视频内嵌代码]</div><style>.video-container { position: relative; padding-top: 56.25%; } .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }</style> --><h1 id="第四期：HailinTV-网站进阶指南"><a href="#第四期：HailinTV-网站进阶指南" class="headerlink" title="第四期：HailinTV 网站进阶指南"></a>第四期：HailinTV 网站进阶指南</h1><h2 id="🎬-网站简介"><a href="#🎬-网站简介" class="headerlink" title="🎬 网站简介"></a>🎬 网站简介</h2><p> HailinTV  是一个精心打造的影视聚合平台，汇集了：</p><ul><li>最新热门电影 🎥</li><li>热门电视剧集 📺</li><li>精品短剧合集</li><li>动漫新番 🌟</li><li>漫画资源 📚</li></ul><h2 id="🔑-快速访问指南"><a href="#🔑-快速访问指南" class="headerlink" title="🔑 快速访问指南"></a>🔑 快速访问指南</h2><ol><li><p><strong>网站入口</strong>：</p><ul><li>方式一：通过<a href="https://hlxpy.hljs.qzz.io/">海林小站首页</a>导航栏进入</li><li>方式二：直接访问<a href="https://hltvs.hljs.qzz.io/">HaiLinTV - 免费在线视频搜索与观看平台 (qzz.io)</a></li></ul></li><li><p><strong>登录信息</strong>：</p><ul><li>登录密码：<code>123456</code></li></ul><p><img src="https://blogtc.hljs.qzz.io/hailintv%E7%99%BB%E5%BD%95%E5%AF%86%E7%A0%81.png" alt="hailintv-mima.jpg"></p><ul><li>首次登录后建议缓慢的话稍等片刻即可</li></ul></li></ol><h2 id="💡-使用小贴士"><a href="#💡-使用小贴士" class="headerlink" title="💡 使用小贴士"></a>💡 使用小贴士</h2><ul><li>推荐使用 Edge 浏览器获得最佳体验</li><li>遇到加载问题可尝试切换播放线路</li></ul><h2 id="⚠️-重要声明"><a href="#⚠️-重要声明" class="headerlink" title="⚠️ 重要声明"></a>⚠️ 重要声明</h2><p>本网站所有内容仅供个人娱乐使用，请遵守以下规范：</p><ol><li>禁止商用或二次传播</li><li>发现异常内容请及时反馈</li></ol><p>祝您观影愉快！🎉</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> 影视音乐 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 工具 </tag>
-            
-            <tag> 教程 </tag>
-            
-            <tag> HaiLinTV </tag>
-            
-            <tag> 影视 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>第一期：HailinMusicPlayer 安装使用指南</title>
       <link href="/2025/08/08/%E7%AC%AC%E4%B8%80%E6%9C%9F%EF%BC%9A%E5%85%B3%E4%BA%8E%E5%A6%82%E4%BD%95%E4%B8%8B%E8%BD%BD%20HailinMusicPlayer%20%E4%BB%A5%E5%8F%8A%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/"/>
       <url>/2025/08/08/%E7%AC%AC%E4%B8%80%E6%9C%9F%EF%BC%9A%E5%85%B3%E4%BA%8E%E5%A6%82%E4%BD%95%E4%B8%8B%E8%BD%BD%20HailinMusicPlayer%20%E4%BB%A5%E5%8F%8A%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/</url>
       
-        <content type="html"><![CDATA[<!-- <div class="video-container">[视频内嵌代码]</div><style>.video-container { position: relative; padding-top: 56.25%; } .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }</style> --><h1 id="第一期：HailinMusicPlayer-安装使用指南"><a href="#第一期：HailinMusicPlayer-安装使用指南" class="headerlink" title="第一期：HailinMusicPlayer 安装使用指南"></a>第一期：HailinMusicPlayer 安装使用指南</h1><h2 id="一、下载软件包"><a href="#一、下载软件包" class="headerlink" title="一、下载软件包"></a>一、下载软件包</h2><h3 id="详细步骤："><a href="#详细步骤：" class="headerlink" title="详细步骤："></a>详细步骤：</h3><ol><li>访问<a href="https://openlist.hljs.qzz.io/">海林小喷壶官网</a></li><li>找到<code>HailinMusicPlayer.rar</code>下载链接</li><li>将文件保存到非系统盘（推荐D盘）</li></ol><p><img src="https://blogtc.hljs.qzz.io/1.jpg" alt="1.jpg"></p><blockquote><p><strong>重要提示</strong>：如果没有D盘，也可以放在其他盘，只要能找到下载好的压缩包就行。</p></blockquote><h3 id="如果觉得压缩包麻烦可以直接下载安装包："><a href="#如果觉得压缩包麻烦可以直接下载安装包：" class="headerlink" title="如果觉得压缩包麻烦可以直接下载安装包："></a>如果觉得压缩包麻烦可以直接下载安装包：</h3><p><img src="https://blogtc.hljs.qzz.io/%E7%AC%AC%E4%B8%80%E6%9C%9F%E8%A1%A5%E5%85%85%E5%9B%BE.png" alt="第一期补充图.png"></p><h2 id="二、创建安装目录"><a href="#二、创建安装目录" class="headerlink" title="二、创建安装目录"></a>二、创建安装目录</h2><ol><li>在D盘新建文件夹：<ul><li>右键D盘空白处 → 新建 → 文件夹</li><li>命名为<code>HailinMusicPlayer</code></li></ul></li></ol><p><img src="https://blogtc.hljs.qzz.io/2.jpg" alt="2.jpg"></p><ol start="2"><li>解压安装包：<ul><li>右键<code>.rar</code>文件 → 解压到当前文件夹</li><li>得到<code>HailinMusicPlayer-4.9.0-win-x64</code>目录</li></ul></li></ol><h2 id="三、安装过程详解"><a href="#三、安装过程详解" class="headerlink" title="三、安装过程详解"></a>三、安装过程详解</h2><ol><li>进入解压后的文件夹，双击安装程序：</li></ol><p><img src="https://blogtc.hljs.qzz.io/3.jpg" alt="3.jpg"></p><ol start="2"><li>点击”下一步”继续安装：</li></ol><p><img src="https://blogtc.hljs.qzz.io/4.jpg" alt="4.jpg"></p><ol start="3"><li>选择安装路径：<ul><li>点击”浏览”按钮</li><li>选择之前创建的<code>D:\HailinMusicPlayer</code></li></ul></li></ol><p><img src="https://blogtc.hljs.qzz.io/5.png" alt="5.png"></p><ol start="4"><li>确认安装位置：</li></ol><p><img src="https://blogtc.hljs.qzz.io/6.png" alt="6.png"></p><ol start="5"><li>开始安装：</li></ol><p><img src="https://blogtc.hljs.qzz.io/7.png" alt="7.png"></p><h2 id="四、安装后操作"><a href="#四、安装后操作" class="headerlink" title="四、安装后操作"></a>四、安装后操作</h2><ol><li>创建桌面快捷方式（可选）</li><li>首次运行建议：<ul><li>右键图标 → 以管理员身份运行</li><li>允许防火墙访问（如弹出提示）</li></ul></li></ol><h2 id="常见问题解答"><a href="#常见问题解答" class="headerlink" title="常见问题解答"></a>常见问题解答</h2><p>Q：安装失败怎么办？<br>A：请检查：</p><ol><li>安装路径是否包含中文</li><li>是否关闭了杀毒软件</li><li>关闭系统防火墙大概率可以解决安装不了的问题。</li></ol><blockquote><p>如需更多帮助，请联系站长邮箱：<a href="mailto:&#104;&#108;&#120;&#x70;&#121;&#64;&#113;&#x71;&#x2e;&#x63;&#111;&#x6d;">hlxpy@qq.com</a></p></blockquote>]]></content>
+        <content type="html"><![CDATA[<!-- <div class="video-container">[视频内嵌代码]</div><style>.video-container { position: relative; padding-top: 56.25%; } .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }</style> --><h1 id="第一期：HailinMusicPlayer-安装使用指南"><a href="#第一期：HailinMusicPlayer-安装使用指南" class="headerlink" title="第一期：HailinMusicPlayer 安装使用指南"></a>第一期：HailinMusicPlayer 安装使用指南</h1><h2 id="一、下载软件包"><a href="#一、下载软件包" class="headerlink" title="一、下载软件包"></a>一、下载软件包</h2><h3 id="详细步骤："><a href="#详细步骤：" class="headerlink" title="详细步骤："></a>详细步骤：</h3><ol><li>访问<a href="https://openlist.hljs.qzz.io/">海林小喷壶官网</a></li><li>找到<code>HailinMusicPlayer.rar</code>下载链接</li><li>将文件保存到非系统盘（推荐D盘）</li></ol><p><img src="https://blogtc.hljs.qzz.io/1.jpg" alt="1.jpg"></p><blockquote><p><strong>重要提示</strong>：如果没有D盘，也可以放在其他盘，只要能找到下载好的压缩包就行。</p></blockquote><h3 id="如果觉得压缩包麻烦可以直接下载安装包："><a href="#如果觉得压缩包麻烦可以直接下载安装包：" class="headerlink" title="如果觉得压缩包麻烦可以直接下载安装包："></a>如果觉得压缩包麻烦可以直接下载安装包：</h3><p><img src="https://blogtc.hljs.qzz.io/%E7%AC%AC%E4%B8%80%E6%9C%9F%E8%A1%A5%E5%85%85%E5%9B%BE.png" alt="第一期补充图.png"></p><h2 id="二、创建安装目录"><a href="#二、创建安装目录" class="headerlink" title="二、创建安装目录"></a>二、创建安装目录</h2><ol><li>在D盘新建文件夹：<ul><li>右键D盘空白处 → 新建 → 文件夹</li><li>命名为<code>HailinMusicPlayer</code></li></ul></li></ol><p><img src="https://blogtc.hljs.qzz.io/2.jpg" alt="2.jpg"></p><ol start="2"><li>解压安装包：<ul><li>右键<code>.rar</code>文件 → 解压到当前文件夹</li><li>得到<code>HailinMusicPlayer-4.9.0-win-x64</code>目录</li></ul></li></ol><h2 id="三、安装过程详解"><a href="#三、安装过程详解" class="headerlink" title="三、安装过程详解"></a>三、安装过程详解</h2><ol><li>进入解压后的文件夹，双击安装程序：</li></ol><p><img src="https://blogtc.hljs.qzz.io/3.jpg" alt="3.jpg"></p><ol start="2"><li>点击”下一步”继续安装：</li></ol><p><img src="https://blogtc.hljs.qzz.io/4.jpg" alt="4.jpg"></p><ol start="3"><li>选择安装路径：<ul><li>点击”浏览”按钮</li><li>选择之前创建的<code>D:\HailinMusicPlayer</code></li></ul></li></ol><p><img src="https://blogtc.hljs.qzz.io/5.png" alt="5.png"></p><ol start="4"><li>确认安装位置：</li></ol><p><img src="https://blogtc.hljs.qzz.io/6.png" alt="6.png"></p><ol start="5"><li>开始安装：</li></ol><p><img src="https://blogtc.hljs.qzz.io/7.png" alt="7.png"></p><h2 id="四、安装后操作"><a href="#四、安装后操作" class="headerlink" title="四、安装后操作"></a>四、安装后操作</h2><ol><li>创建桌面快捷方式（可选）</li><li>首次运行建议：<ul><li>右键图标 → 以管理员身份运行</li><li>允许防火墙访问（如弹出提示）</li></ul></li></ol><h2 id="常见问题解答"><a href="#常见问题解答" class="headerlink" title="常见问题解答"></a>常见问题解答</h2><p>Q：安装失败怎么办？<br>A：请检查：</p><ol><li>安装路径是否包含中文</li><li>是否关闭了杀毒软件</li><li>关闭系统防火墙大概率可以解决安装不了的问题。</li></ol><blockquote><p>如需更多帮助，请联系站长邮箱：<a href="mailto:&#x68;&#x6c;&#120;&#112;&#121;&#x40;&#x71;&#113;&#x2e;&#99;&#111;&#109;">hlxpy@qq.com</a></p></blockquote>]]></content>
       
       
       <categories>
@@ -556,9 +540,71 @@
             
             <tag> 教程 </tag>
             
+            <tag> 海林影院 </tag>
+            
             <tag> 影视 </tag>
             
-            <tag> 海林影院 </tag>
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>第二期：HailinMusicPlayer 使用指南</title>
+      <link href="/2025/08/08/%E7%AC%AC%E4%BA%8C%E6%9C%9F%EF%BC%9AHailinMusicPlayer%20%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/"/>
+      <url>/2025/08/08/%E7%AC%AC%E4%BA%8C%E6%9C%9F%EF%BC%9AHailinMusicPlayer%20%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/</url>
+      
+        <content type="html"><![CDATA[<!-- <div class="video-container">[视频内嵌代码]</div><style>.video-container { position: relative; padding-top: 56.25%; } .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }</style> --><h1 id="第二期：HailinMusicPlayer-使用指南"><a href="#第二期：HailinMusicPlayer-使用指南" class="headerlink" title="第二期：HailinMusicPlayer 使用指南"></a>第二期：HailinMusicPlayer 使用指南</h1><h2 id="一、使用网易云UID登录"><a href="#一、使用网易云UID登录" class="headerlink" title="一、使用网易云UID登录"></a>一、使用网易云<code>UID</code>登录</h2><p><img src="https://blogtc.hljs.qzz.io/%E7%99%BB%E5%BD%95%E6%96%B9%E5%BC%8F.jpg" alt="登录方式.jpg"></p><h2 id="二、关于邀请码系统"><a href="#二、关于邀请码系统" class="headerlink" title="二、关于邀请码系统"></a>二、关于邀请码系统</h2><h3 id="为什么需要邀请码？"><a href="#为什么需要邀请码？" class="headerlink" title="为什么需要邀请码？"></a>为什么需要邀请码？</h3><p>我们采用邀请码机制主要基于以下考虑：</p><ol><li><p><strong>保障优质体验</strong></p><ul><li>控制用户增长规模，确保服务器稳定运行</li><li>避免因用户激增导致的播放卡顿、延迟等问题</li><li>为每位用户保留充足的带宽资源</li></ul></li><li><p><strong>维护社区环境</strong></p><ul><li>筛选真正热爱音乐的核心用户</li><li>建立良好的音乐分享氛围</li><li>有效防止机器人和恶意注册</li></ul></li><li><p><strong>版权保护</strong></p><ul><li>合规管理音乐内容使用</li><li>尊重音乐人创作成果</li><li>建立可追溯的使用记录</li></ul></li></ol><blockquote><p>温馨提醒：本播放器为个人开发的学习项目，感谢您的理解与支持</p></blockquote><h2 id="三、获取邀请码方式"><a href="#三、获取邀请码方式" class="headerlink" title="三、获取邀请码方式"></a>三、获取邀请码方式</h2><h3 id="官方渠道"><a href="#官方渠道" class="headerlink" title="官方渠道"></a>官方渠道</h3><ul><li>定期在<a href="https://hlxpy.hljs.qzz.io/essay/">海林小盆友即刻短文</a>发放</li><li>关注官方动态获取限时邀请码</li><li>联系客服邮箱：<a href="mailto:&#x68;&#108;&#x78;&#112;&#x79;&#x40;&#x71;&#x71;&#x2e;&#x63;&#111;&#109;">hlxpy@qq.com</a></li></ul><h3 id="当前可用邀请码"><a href="#当前可用邀请码" class="headerlink" title="当前可用邀请码"></a>当前可用邀请码</h3><p>邀请码：<strong>VIP001</strong></p><h2 id="四、获取邀请码"><a href="#四、获取邀请码" class="headerlink" title="四、获取邀请码"></a>四、获取邀请码</h2><ul><li>🛰搜索：<code>LYZ166024 </code></li><li>输入：<code>邀请码</code></li><li>即可获得邀请码</li></ul><h2 id="五、费用说明"><a href="#五、费用说明" class="headerlink" title="五、费用说明"></a>五、费用说明</h2><p>当前收取<code>0.98</code>元主要用于：</p><ul><li><code>0.98即可通过邀请码使用本软件</code></li><li>服务器基础运维费用</li><li>域名续费成本</li><li>基础功能维护更新</li></ul><p>我们承诺：<br>✓ 费用透明公开<br>✓ 无隐藏收费<br>✓ 持续优化体验</p><h2 id="六、常见问题"><a href="#六、常见问题" class="headerlink" title="六、常见问题"></a>六、常见问题</h2><p>Q：邀请码会失效吗？<br>A：目前发放的邀请码长期有效</p><p>Q：遇到技术问题怎么办？<br>A：欢迎随时联系🛰：<code>LYZ166024</code></p><p>感谢您选择<code>HailinMusicPlayer</code>！<br>我们将持续改进，为您提供更好的音乐体验。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 影视音乐 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 工具 </tag>
+            
+            <tag> HailinMusicPlayer </tag>
+            
+            <tag> 教程 </tag>
+            
+            <tag> 音乐 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>第四期：HailinTV 网站进阶指南</title>
+      <link href="/2025/08/08/%E7%AC%AC%E5%9B%9B%E6%9C%9F%EF%BC%9AHailinTV-%E7%BD%91%E7%AB%99%E8%BF%9B%E9%98%B6%E6%8C%87%E5%8D%97/"/>
+      <url>/2025/08/08/%E7%AC%AC%E5%9B%9B%E6%9C%9F%EF%BC%9AHailinTV-%E7%BD%91%E7%AB%99%E8%BF%9B%E9%98%B6%E6%8C%87%E5%8D%97/</url>
+      
+        <content type="html"><![CDATA[<!-- <div class="video-container">[视频内嵌代码]</div><style>.video-container { position: relative; padding-top: 56.25%; } .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }</style> --><h1 id="第四期：HailinTV-网站进阶指南"><a href="#第四期：HailinTV-网站进阶指南" class="headerlink" title="第四期：HailinTV 网站进阶指南"></a>第四期：HailinTV 网站进阶指南</h1><h2 id="🎬-网站简介"><a href="#🎬-网站简介" class="headerlink" title="🎬 网站简介"></a>🎬 网站简介</h2><p> HailinTV  是一个精心打造的影视聚合平台，汇集了：</p><ul><li>最新热门电影 🎥</li><li>热门电视剧集 📺</li><li>精品短剧合集</li><li>动漫新番 🌟</li><li>漫画资源 📚</li></ul><h2 id="🔑-快速访问指南"><a href="#🔑-快速访问指南" class="headerlink" title="🔑 快速访问指南"></a>🔑 快速访问指南</h2><ol><li><p><strong>网站入口</strong>：</p><ul><li>方式一：通过<a href="https://hlxpy.hljs.qzz.io/">海林小站首页</a>导航栏进入</li><li>方式二：直接访问<a href="https://hltvs.hljs.qzz.io/">HaiLinTV - 免费在线视频搜索与观看平台 (qzz.io)</a></li></ul></li><li><p><strong>登录信息</strong>：</p><ul><li>登录密码：<code>123456</code></li></ul><p><img src="https://blogtc.hljs.qzz.io/hailintv%E7%99%BB%E5%BD%95%E5%AF%86%E7%A0%81.png" alt="hailintv-mima.jpg"></p><ul><li>首次登录后建议缓慢的话稍等片刻即可</li></ul></li></ol><h2 id="💡-使用小贴士"><a href="#💡-使用小贴士" class="headerlink" title="💡 使用小贴士"></a>💡 使用小贴士</h2><ul><li>推荐使用 Edge 浏览器获得最佳体验</li><li>遇到加载问题可尝试切换播放线路</li></ul><h2 id="⚠️-重要声明"><a href="#⚠️-重要声明" class="headerlink" title="⚠️ 重要声明"></a>⚠️ 重要声明</h2><p>本网站所有内容仅供个人娱乐使用，请遵守以下规范：</p><ol><li>禁止商用或二次传播</li><li>发现异常内容请及时反馈</li></ol><p>祝您观影愉快！🎉</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 影视音乐 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 工具 </tag>
+            
+            <tag> 教程 </tag>
+            
+            <tag> 影视 </tag>
+            
+            <tag> HaiLinTV </tag>
             
         </tags>
       
