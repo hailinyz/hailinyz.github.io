@@ -1,0 +1,70 @@
+- creativity_list:
+    - name: HTML5
+      icon: https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg
+      color: "#e34f26"
+    - name: CSS3
+      icon: https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg
+      color: "#1572b6"
+    - name: JavaScript
+      icon: https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg
+      color: "#f7df1e"
+    - name: Vue.js
+      icon: https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg
+      color: "#4fc08d"
+    - name: React
+      icon: https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg
+      color: "#61dafb"
+    - name: Node.js
+      icon: https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg
+      color: "#339933"
+    - name: Python
+      icon: https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg
+      color: "#3776ab"
+    - name: Git
+      icon: https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg
+      color: "#f05032"
+    - name: Docker
+      icon: https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg
+      color: "#2496ed"
+    - name: MySQL
+      icon: https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg
+      color: "#4479a1"
+    - name: MongoDB
+      icon: https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg
+      color: "#47a248"
+    - name: TypeScript
+      icon: https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg
+      color: "#3178c6"
+    - name: Angular
+      icon: https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg
+      color: "#dd0031"
+    - name: PHP
+      icon: https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg
+      color: "#777bb4"
+    - name: Java
+      icon: https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg
+      color: "#f89820"
+    - name: C++
+      icon: https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg
+      color: "#00599c"
+    - name: Go
+      icon: https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg
+      color: "#00add8"
+    - name: Rust
+      icon: https://cdn.jsdelivr.net/gh/devicons/devicon/icons/rust/rust-plain.svg
+      color: "#ce422b"
+    - name: Swift
+      icon: https://cdn.jsdelivr.net/gh/devicons/devicon/icons/swift/swift-original.svg
+      color: "#ff6b35"
+    - name: Kotlin
+      icon: https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kotlin/kotlin-original.svg
+      color: "#7f52ff"
+    - name: Flutter
+      icon: https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg
+      color: "#02569b"
+    - name: Redis
+      icon: https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg
+      color: "#dc382d"
+    - name: PostgreSQL
+      icon: https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg
+      color: "#336791" 

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Twikoo配置测试</title>
+    <script src="https://cdn.staticfile.org/twikoo/1.6.44/twikoo.all.min.js"></script>
+</head>
+<body>
+    <h1>Twikoo IP归属地测试</h1>
+    <div id="twikoo-wrap"></div>
+    
+    <script>
+        twikoo.init({
+            envId: 'https://glittery-pegasus-4fe5ce.netlify.app/.netlify/functions/twikoo',
+            region: 'ap-shanghai',
+            el: '#twikoo-wrap',
+            SHOW_REGION: true,
+            SHOW_IP: false,
+            SHOW_UA: true,
+            SHOW_OS: true,
+            SHOW_BROWSER: true,
+            SHOW_LOCATION: true,
+            SHOW_TIME: true,
+            ANONYMOUS: true,
+            onCommentLoaded: function() {
+                console.log('评论加载完成');
+            }
+        });
+    </script>
+</body>
+</html> 
