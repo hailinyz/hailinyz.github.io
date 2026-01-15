@@ -1,0 +1,63 @@
+name: Deploy Hexo Blog
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: |
+        pwd
+        ls -la
+        npm ci
+        npm install hexo-renderer-stylus hexo-renderer-pug --save
+        echo "Installing theme dependencies:"
+        cd themes/anzhiyu && npm install
+        cd ../..
+      
+    - name: Build
+      run: |
+        pwd
+        ls -la
+        echo "Checking theme directory:"
+        ls -la themes/
+        echo "Checking theme config:"
+        cat _config.yml | grep theme
+        echo "Checking if theme files exist:"
+        ls -la themes/anzhiyu/
+        echo "Building site:"
+        npx hexo generate
+      
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      if: github.ref == 'refs/heads/main'
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./public
+        force_orphan: true 
